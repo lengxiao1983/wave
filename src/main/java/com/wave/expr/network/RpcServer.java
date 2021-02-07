@@ -1,19 +1,13 @@
 package com.wave.expr.network;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.parser.Feature;
 import com.alibaba.fastjson.parser.ParserConfig;
-import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.wave.expr.master.TasksubmitRequest;
+import com.wave.expr.network.request.RequestType;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.lang.reflect.Method;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author shkstart
@@ -46,18 +40,18 @@ public class RpcServer {
                         Socket socket = server.accept();
                         ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
 
-                        String jsonString = String.valueOf(input.readObject());
-                        System.out.println("server received msg:" + jsonString);
-                        ParserConfig config = new ParserConfig();
-                        config.setAutoTypeSupport(true);
-                        AbstractMessage request =  JSON.parseObject(jsonString, TasksubmitRequest.class);
-                        AbstractMessage response = request.getHandle().handle(request);
+                        String name = (String) input.readObject();
+                        RequestType type = RequestType.valueOf(name);
+                        byte[] bytes = (byte[])input.readObject();
+                        AbstractMessage msg = type.getMessage().getSerializer().deSerialize(bytes);
+                        System.out.println("server received msg:" + msg.desc());
+                        AbstractMessage response = msg.getHandle().handle(msg);
 
                         //返回给客户端即服务消费者数据
                         ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
-                        String msg = JSON.toJSONString(response);
-                        output.writeObject(msg);
-                        System.out.println("service response msg:" + msg);
+                        output.writeObject(msg.getRequestType().name());//消息头
+                        output.writeObject(msg.getResponseSerializer().serialize(response));
+                        System.out.println("service response msg:" + response.desc());
                     }
                 } catch (Exception e) {
                     System.out.println(e.getMessage());

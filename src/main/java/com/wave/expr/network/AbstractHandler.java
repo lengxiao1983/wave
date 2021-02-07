@@ -1,11 +1,18 @@
 package com.wave.expr.network;
 
+import com.wave.expr.network.response.AbstractResponse;
+
 /**
  * @author shkstart
  * @create 2021-01-30 15:15
  */
-public abstract class AbstractHandler {
+public abstract class AbstractHandler<Req extends AbstractMessage, Rsp extends AbstractResponse> {
 
-    public abstract AbstractMessage handle(AbstractMessage param);
+    /**
+     * 消息处理
+     * @param param
+     * @return
+     */
+    public abstract Rsp handle(Req param);
 
 }

@@ -1,13 +1,9 @@
 package com.wave.expr.test;
 
-import com.wave.expr.master.TasksubmitRequest;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.PriorityBlockingQueue;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author shkstart
