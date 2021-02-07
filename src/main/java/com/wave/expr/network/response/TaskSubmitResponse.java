@@ -1,8 +1,5 @@
 package com.wave.expr.network.response;
 
-import com.wave.expr.network.AbstractMessage;
-import com.wave.expr.network.AbstractSerialize;
-
 
 /**
  * @author liqiu.qlq

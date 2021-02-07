@@ -9,6 +9,10 @@ public class WaveException extends RuntimeException {
         super();
     }
 
+    public WaveException(String msg) {
+        super(msg);
+    }
+
     public WaveException(Throwable t) {
         super(t);
     }

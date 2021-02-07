@@ -1,10 +1,15 @@
 package com.wave.expr.network.request;
 
+import com.alibaba.fastjson.JSON;
+import com.wave.expr.master.plan.ExprPlanNode;
+import com.wave.expr.master.plan.PlanNode;
 import com.wave.expr.network.AbstractHandler;
 import com.wave.expr.network.AbstractMessage;
 import com.wave.expr.network.AbstractSerialize;
-import com.wave.expr.network.response.AbstractResponse;
 import com.wave.expr.network.response.TaskSubmitResponse;
+import com.wave.expr.slave.AbstractOperator;
+import com.wave.expr.slave.execute.PriorityOperatorQueue;
+import com.wave.expr.slave.execute.PriorityOperatorRunner;
 
 import java.io.IOException;
 
@@ -12,23 +17,17 @@ import java.io.IOException;
  * @author liqiu.qlq
  */
 public class TaskSubmitRequest extends AbstractMessage {
-    private String inParams;
+    private PlanNode planNode;
 
     public TaskSubmitRequest() {
-
     }
 
-    public TaskSubmitRequest inParams(String inParams) {
-        this.inParams = inParams;
-        return this;
+    public PlanNode getPlanNode() {
+        return planNode;
     }
 
-    public String getInParams() {
-        return inParams;
-    }
-
-    public void setInParams(String inParams) {
-        this.inParams = inParams;
+    public void setPlanNode(ExprPlanNode planNode) {
+        this.planNode = planNode;
     }
 
     @Override
@@ -36,9 +35,26 @@ public class TaskSubmitRequest extends AbstractMessage {
         return new AbstractHandler<TaskSubmitRequest, TaskSubmitResponse>() {
             @Override
             public TaskSubmitResponse handle(TaskSubmitRequest param) {
+                PlanNode planNode = param.getPlanNode();
+                AbstractOperator operator = planNode.getFactory().offer(planNode);
+                PriorityOperatorRunner runner = new PriorityOperatorRunner();
+                runner.setOperator(operator);
+                if (planNode.getPlanNode() != null) {
+                    operator.setOperator(parseOperator(planNode.getPlanNode()));
+                }
+                PriorityOperatorQueue.get().add(runner);
                 TaskSubmitResponse response = new TaskSubmitResponse();
-                response.setOutParams("handle response:" + param.desc());
+                response.setOutParams("success");
                 return response;
+            }
+
+            private AbstractOperator parseOperator(PlanNode planNode) {
+                AbstractOperator operator = planNode.getFactory().offer(planNode);
+                if (planNode.getPlanNode() == null) {
+                    return operator;
+                }
+                operator.setOperator(parseOperator(planNode.getPlanNode()));
+                return operator;
             }
         };
     }
@@ -84,7 +100,7 @@ public class TaskSubmitRequest extends AbstractMessage {
 
     @Override
     public String desc() {
-        return "inParams:" + inParams;
+        return "planNode:" + JSON.toJSONString(planNode);
     }
 
 }
