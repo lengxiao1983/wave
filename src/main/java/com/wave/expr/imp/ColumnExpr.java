@@ -30,14 +30,17 @@ public class ColumnExpr extends AbstractExpr {
         this.columnName = columnName;
     }
 
+    @Override
     public String op() {
         return "COLUMN";
     }
 
+    @Override
     public Object computer(Map<String, Double> row) {
         return row.get(columnName);
     }
 
+    @Override
     public Object tryCompute(Map<String, Double> curRow) {
         return null;
     }
