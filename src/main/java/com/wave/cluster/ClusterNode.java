@@ -1,6 +1,5 @@
 package com.wave.cluster;
 
-import com.wave.master.Master;
 import com.wave.network.Address;
 import lombok.Data;
 
