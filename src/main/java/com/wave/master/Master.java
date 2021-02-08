@@ -35,6 +35,10 @@ public class Master extends ClusterNode {
      */
     private static final ConcurrentHashMap<Address, Slave> slaves = new ConcurrentHashMap<Address, Slave>();
 
+    public Address offerSlave() {
+        return slaves.keys().nextElement();
+    }
+
     @Override
     public ClusterType getClusterType() {
         return ClusterType.MASTER;

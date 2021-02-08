@@ -23,7 +23,7 @@ public class Slave extends ClusterNode {
     /**
      * 最近心跳时间
      */
-    private Date lastHBTime;
+    private Date lastHBTime = new Date();
 
     public static final Slave instance = new Slave();
 

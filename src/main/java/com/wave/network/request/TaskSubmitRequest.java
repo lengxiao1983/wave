@@ -26,7 +26,7 @@ public class TaskSubmitRequest extends AbstractMessage {
         return planNode;
     }
 
-    public void setPlanNode(ExprPlanNode planNode) {
+    public void setPlanNode(PlanNode planNode) {
         this.planNode = planNode;
     }
 
