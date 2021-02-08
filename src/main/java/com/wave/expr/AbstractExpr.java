@@ -1,5 +1,6 @@
 package com.wave.expr;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +10,7 @@ import java.util.Set;
  * @author shkstart
  * @create 2021-01-26 21:18
  */
-public abstract class AbstractExpr {
+public abstract class AbstractExpr implements Serializable {
     public List<AbstractExpr> params = new ArrayList<AbstractExpr>();
 
     public AbstractExpr() {
