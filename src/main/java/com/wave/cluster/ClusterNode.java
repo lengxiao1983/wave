@@ -1,5 +1,6 @@
 package com.wave.cluster;
 
+import com.wave.master.Master;
 import com.wave.network.Address;
 import lombok.Data;
 
@@ -8,6 +9,9 @@ import lombok.Data;
  */
 @Data
 public abstract class ClusterNode {
+    /**
+     * 本地地址
+     */
     private Address address;
 
     /**
