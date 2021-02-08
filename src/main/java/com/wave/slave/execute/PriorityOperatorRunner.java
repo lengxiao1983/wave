@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * @author liqiu.qlq
  */
-public class PriorityOperatorRunner {
+public class PriorityOperatorRunner implements Comparable<PriorityOperatorRunner> {
     private AbstractOperator operator;
 
     public AbstractOperator getOperator() {
@@ -31,6 +31,10 @@ public class PriorityOperatorRunner {
         } else {
             return row;
         }
+    }
+
+    public int compareTo(PriorityOperatorRunner o) {
+        return 1;
     }
 
     private Object runInner(AbstractOperator operator, Map<String, Double> row) {
