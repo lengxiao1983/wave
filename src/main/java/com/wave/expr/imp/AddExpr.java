@@ -20,6 +20,7 @@ public class AddExpr extends AbstractExpr {
         return op;
     }
 
+    @Override
     public Object computer(WaveRow row) {
         List<AbstractExpr> params = getParams();
         if (params == null) {
@@ -32,8 +33,15 @@ public class AddExpr extends AbstractExpr {
         return ret;
     }
 
+    @Override
     public Object tryCompute(WaveRow curRow) {
-        return null;
+        List<AbstractExpr> params = getParams();
+        for (AbstractExpr expr : params) {
+            if (UNKNOWN_RESULT.equals(expr.computer(curRow))) {
+                return UNKNOWN_RESULT;
+            }
+        }
+        return computer(curRow);
     }
 
     @Override
