@@ -7,7 +7,9 @@ import com.wave.network.RpcServer;
 import com.wave.slave.Slave;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
@@ -33,9 +35,10 @@ public class Master extends ClusterNode {
      * slave 节点
      */
     private static final ConcurrentHashMap<Address, Slave> slaves = new ConcurrentHashMap<Address, Slave>();
+    private static final List<Address> addresses = new ArrayList<Address>();
 
-    public Address offerSlave() {
-        return slaves.keys().nextElement();
+    public Address offerSlaveAddress() {
+        return addresses.get(0);
     }
 
     @Override
@@ -71,8 +74,30 @@ public class Master extends ClusterNode {
     }
 
 
-    public void addSlave(Slave slave) {
+    public Master addSlave(Slave slave) {
         slaves.put(slave.getAddress(), slave);
+        return this;
+    }
+
+    public Master addSlaveAddress(List<Address> addresses) {
+        if (addresses == null) {
+            return this;
+        }
+        for (Address address : addresses) {
+            Slave slave = new Slave();
+            slaves.put(slave.getAddress(), slave);
+        }
+        return this;
+    }
+
+    public Master addSlaves(List<Slave> slaveList) {
+        if (slaveList == null) {
+            return this;
+        }
+        for (Slave slave : slaveList) {
+            slaves.put(slave.getAddress(), slave);
+        }
+        return this;
     }
 
     public Slave removeSlave(Address address) {

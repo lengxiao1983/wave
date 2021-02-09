@@ -45,10 +45,10 @@ public class AppMain {
         for (ClusterType type : clusterTypeSet) {
             switch (type) {
                 case MASTER:
-                    Master.get().start();
+                    Master.get().addSlaveAddress(Config.get().getSlaveAddresses()).start();
                     break;
                 case SLAVE:
-                    Slave.get().start();
+                    Slave.get().masterAddress(Config.get().getMasterAddress()).start();
                     break;
                 default:
                     throw new RuntimeException();
