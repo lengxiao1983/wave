@@ -1,9 +1,12 @@
 package com.wave.common.config;
 
+import com.wave.cluster.ClusterType;
+import com.wave.common.Constant;
+import com.wave.network.Address;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.InputStream;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * @author liqiu.qlq
@@ -25,14 +28,62 @@ public class Config {
         Properties properties = new Properties();
         InputStream in = Config.class.getClassLoader().getResourceAsStream("config.properties");
         properties.load(in);
-        System.out.println("config:" + properties.toString());
-        System.out.println("config load success...");
+        log.info("start load config...");
+        for (Object key : properties.keySet()) {
+            log.info(String.valueOf(key) + " : " + properties.getProperty(String.valueOf(key)));
+        }
+        log.info("config load success...");
+    }
 
+    public Address getMasterAddress() {
+        String val = getString(Constant.CONFIG_KEY_MASTER_ADDRESS);
+        if (val == null) {
+            return null;
+        }
+        String[] arr = val.split(":");
+        Address address = new Address();
+        address.setIp(arr[0].trim());
+        address.setPort(Integer.valueOf(arr[1]));
+        return address;
+    }
+
+    public List<Address> getSlaveAddresses() {
+        String val = getString(Constant.CONFIG_KEY_SLAVE_ADDRESS);
+        if (val == null) {
+            return null;
+        }
+        String[] array = val.split("\\|");
+        List<Address> addressList = new ArrayList<Address>();
+        for (String arr : array) {
+            String[] ar = arr.split(":");
+            Address address = new Address();
+            address.setIp(ar[0].trim());
+            address.setPort(Integer.valueOf(ar[1]));
+            addressList.add(address);
+        }
+        return addressList;
     }
 
     public String getString(String key, String defaultValue) {
         String val = getString(key);
         return val != null ? val : defaultValue;
+    }
+
+    public Set<ClusterType> getClusterType() {
+        String values = getString(Constant.CONFIG_KEY_CLUSTER_TYPE);
+        if (values == null) {
+            return null;
+        }
+        String[] arr = values.split("\\|");
+        Set<ClusterType> clusterTypes = new HashSet<ClusterType>();
+        for (String type : arr) {
+            clusterTypes.add(ClusterType.valueOf(type.trim()));
+        }
+        return clusterTypes;
+    }
+
+    public Integer getListenPort() {
+        return getInteger(Constant.CONFIG_KEY_LISTEN_PORT, 8099);
     }
 
     public String getString(String key) {
@@ -49,8 +100,4 @@ public class Config {
         return val != null ? val : defaultValue;
     }
 
-    public static void main(String[] args) throws Exception {
-        Config.get().init();
-        log.warn("abc");
-    }
 }

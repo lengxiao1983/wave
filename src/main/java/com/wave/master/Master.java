@@ -44,8 +44,7 @@ public class Master extends ClusterNode {
     }
 
 
-    public Master start(int port) throws Exception {
-        RpcServer.get().start(port);
+    public Master start() throws Exception {
         hbThread = new Thread(new Runnable() {
             public void run() {
                 try {

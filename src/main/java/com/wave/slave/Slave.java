@@ -41,8 +41,7 @@ public class Slave extends ClusterNode {
         return ClusterType.SLAVE;
     }
 
-    public Slave start(int port) throws Exception {
-        RpcServer.get().start(port);
+    public Slave start() throws Exception {
         new Thread(new Runnable() {
             public void run() {
                 try {
