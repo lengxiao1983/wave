@@ -13,10 +13,9 @@ public class JobHandler extends HttpHandler {
 
     @Override
     public void doGet(Request request, Response response) {
-        System.out.println("doGet");
-
-        System.out.println(request.getParamter("aaa"));
-        System.out.println(request.getParamter("bbb"));
+        log.info("JobHandler received msg:" + request.getReuestURI().toString());
+        String exprString = request.getParamter("exprString");
+        log.info("exprString:{}", exprString);
 
         response.write("helloWorld.....");
     }
@@ -24,8 +23,7 @@ public class JobHandler extends HttpHandler {
 
     @Override
     public void doPost(Request request, Response response) {
-        System.out.println("doPost");
-        System.out.println(request.getRequestBody());
+        log.info("JobHandler received msg body:{}" + request.getRequestBody());
 
         response.write("helloWorld.....");
     }

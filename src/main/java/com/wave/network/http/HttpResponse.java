@@ -15,9 +15,13 @@ public class HttpResponse implements Response {
 
     public void write(String result) {
         try {
-            httpExchange.sendResponseHeaders(200, result.length());// 设置响应头属性及响应信息的长度
-            OutputStream out = httpExchange.getResponseBody(); // 获得输出流
-            out.write(result.getBytes());
+            byte[] bytes = result.getBytes();
+            // 设置响应头属性及响应信息的长度
+            httpExchange.sendResponseHeaders(200, bytes.length);
+            httpExchange.getResponseHeaders().set("Content-Type", "application/json;charset=utf-8");
+            // 获得输出流
+            OutputStream out = httpExchange.getResponseBody();
+            out.write(bytes);
             out.flush();
             httpExchange.close();
         } catch (IOException e) {

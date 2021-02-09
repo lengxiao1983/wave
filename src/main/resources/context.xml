@@ -5,5 +5,10 @@
         <url-pattern>/job</url-pattern>
     </handler>
 
+    <handler>
+        <handler-class>com.wave.network.http.impl.IndexHandler</handler-class>
+        <url-pattern>/index</url-pattern>
+    </handler>
+
 
 </httpServer>

@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>WAVE-HOME</title>
+</head>
+<body>
+<table width="760" height="100%" align="center">
+<dev margin:0px auto;align:center>
+    <center>
+<form id="exprForm" method="post">
+    <br/><br/><br/><br/><br/><br/><br/><br/>
+    exprString: <input id="exprString" type="text" name="exprString"/><br/>
+
+    dataSource: <input id="dataSource" type="text" name="dataSource"/><br/>
+
+    <input type="button" onclick="submitJob()" value="submitJob"/>
+<script type="text/javascript">
+    function submitJob() {
+        let exprString = document.getElementById("exprString").value;
+        let dataSource = document.getElementById("dataSource").value;
+        window.location.href="http://localhost:8080/wave/job?exprString="+exprString+"&dataSource="+dataSource
+    }
+</script>
+</form>
+    </center>
+</dev>
+</table>
+</body>
+</html>
