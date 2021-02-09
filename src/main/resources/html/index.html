@@ -13,14 +13,11 @@
     U CAN U BB, NO CAN NO BB<br/><br/>
     exprString: <input id="exprString" type="text" name="exprString"/><br/>
 
-    dataSource: <input id="dataSource" type="text" name="dataSource"/><br/>
-
     <input type="button" onclick="submitJob()" value="submitJob"/>
 <script type="text/javascript">
     function submitJob() {
         let exprString = document.getElementById("exprString").value;
-        let dataSource = document.getElementById("dataSource").value;
-        window.location.href="http://localhost:8080/wave/job?exprString="+encodeURI(exprString)+"&dataSource="+encodeURI(dataSource)
+        window.location.href="http://localhost:8080/wave/job?exprString="+encodeURI(exprString)
     }
 </script>
 </form>

@@ -44,18 +44,17 @@ public class RpcServer {
                         RequestType type = RequestType.valueOf(name);
                         byte[] bytes = (byte[])input.readObject();
                         AbstractMessage msg = type.getMessage().getSerializer().deSerialize(bytes);
-                        System.out.println("server received msg:" + msg.desc());
+                        log.info("server received msg:" + msg.desc());
                         AbstractMessage response = msg.getHandle().handle(msg);
 
                         //返回给客户端即服务消费者数据
                         ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
                         output.writeObject(msg.getRequestType().name());//消息头
                         output.writeObject(msg.getResponseSerializer().serialize(response));
-                        System.out.println("service response msg:" + response.desc());
+                        log.info("service response msg:" + response.desc());
                     }
                 } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                    System.out.println(e.getCause());
+                    log.info(e.getMessage(), e);
                     throw new RuntimeException(e);
                 }
             }

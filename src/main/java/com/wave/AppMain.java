@@ -2,23 +2,13 @@ package com.wave;
 
 import com.wave.cluster.ClusterType;
 import com.wave.common.config.Config;
-import com.wave.expr.AbstractExpr;
-import com.wave.expr.parse.ExprParseUtils;
 import com.wave.master.Master;
-import com.wave.master.plan.ExprPlanNode;
-import com.wave.master.plan.InputPlanNode;
-import com.wave.network.AbstractMessage;
-import com.wave.network.Address;
-import com.wave.network.RpcClient;
 import com.wave.network.RpcServer;
 import com.wave.network.http.WaveHttpServer;
-import com.wave.network.request.TaskSubmitRequest;
 import com.wave.slave.Slave;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -49,6 +39,7 @@ public class AppMain {
         for (ClusterType type : clusterTypeSet) {
             switch (type) {
                 case MASTER:
+
                     Master.get().addSlaveAddress(Config.get().getSlaveAddresses()).start();
                     log.info("master start success");
                     break;

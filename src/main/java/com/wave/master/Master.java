@@ -35,10 +35,10 @@ public class Master extends ClusterNode {
      * slave 节点
      */
     private static final ConcurrentHashMap<Address, Slave> slaves = new ConcurrentHashMap<Address, Slave>();
-    private static final List<Address> addresses = new ArrayList<Address>();
+    private static final List<Address> ADDRESSES = new ArrayList<Address>();
 
     public Address offerSlaveAddress() {
-        return addresses.get(0);
+        return ADDRESSES.get(0);
     }
 
     @Override
@@ -83,6 +83,8 @@ public class Master extends ClusterNode {
         if (addresses == null) {
             return this;
         }
+        ADDRESSES.clear();
+        ADDRESSES.addAll(addresses);
         for (Address address : addresses) {
             Slave slave = new Slave();
             slave.setAddress(address);

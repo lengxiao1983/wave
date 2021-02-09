@@ -10,12 +10,14 @@ import com.wave.network.response.TaskSubmitResponse;
 import com.wave.slave.AbstractOperator;
 import com.wave.slave.execute.PriorityOperatorQueue;
 import com.wave.slave.execute.PriorityOperatorRunner;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 
 /**
  * @author liqiu.qlq
  */
+@Slf4j
 public class TaskSubmitRequest extends AbstractMessage {
     private PlanNode planNode;
 
@@ -43,6 +45,7 @@ public class TaskSubmitRequest extends AbstractMessage {
                     operator.setOperator(parseOperator(planNode.getPlanNode()));
                 }
                 PriorityOperatorQueue.get().add(runner);
+                log.info("add runner success");
                 TaskSubmitResponse response = new TaskSubmitResponse();
                 response.setOutParams("success");
                 return response;

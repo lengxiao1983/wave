@@ -4,7 +4,9 @@ import com.wave.cluster.ClusterNode;
 import com.wave.cluster.ClusterType;
 import com.wave.network.Address;
 import com.wave.network.RpcServer;
+import com.wave.slave.execute.OperatorExecute;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -13,6 +15,7 @@ import java.util.concurrent.TimeUnit;
  * @author liqiu.qlq
  */
 @Data
+@Slf4j
 public class Slave extends ClusterNode {
 
     /**
@@ -42,6 +45,8 @@ public class Slave extends ClusterNode {
     }
 
     public Slave start() throws Exception {
+        log.info("start slave begin");
+        OperatorExecute.get().start();
         new Thread(new Runnable() {
             public void run() {
                 try {
