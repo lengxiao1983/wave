@@ -35,7 +35,22 @@ public class OrExpr extends AbstractExpr {
     }
 
     public Object tryCompute(Map<String, Double> curRow) {
-        return null;
+
+        List<AbstractExpr> childs = getParams();
+        boolean hasExistUnknownColumn = true;
+        for (AbstractExpr expr : childs) {
+            if ((expr instanceof ColumnExpr && expr.computer(curRow) == null)
+                    || UNKNOWN_RESULT.equals(expr.computer(curRow))) {
+                hasExistUnknownColumn = false;
+            }
+            if ( Boolean.parseBoolean(String.valueOf(expr.computer(curRow)))) {
+                return true;
+            }
+        }
+        if (!hasExistUnknownColumn) {
+            return UNKNOWN_RESULT;
+        }
+        return false;
     }
 
     @Override
