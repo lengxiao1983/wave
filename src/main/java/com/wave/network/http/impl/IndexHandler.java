@@ -1,6 +1,5 @@
 package com.wave.network.http.impl;
 
-import com.wave.common.config.Config;
 import com.wave.network.http.HttpHandler;
 import com.wave.network.http.Request;
 import com.wave.network.http.Response;
@@ -18,7 +17,7 @@ public class IndexHandler extends HttpHandler  {
     static {
         InputStream in = null;
         try {
-            in = IndexHandler.class.getClassLoader().getResourceAsStream("index.html");
+            in = IndexHandler.class.getClassLoader().getResourceAsStream("html/index.html");
             int len = in.available();
             byte[] bytes = new byte[len];
             in.read(bytes);
