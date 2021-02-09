@@ -13,6 +13,8 @@ import java.util.Set;
 public abstract class AbstractExpr implements Serializable {
     public List<AbstractExpr> params = new ArrayList<AbstractExpr>();
 
+    public static final Object UNKNOWN_RESULT = new Object();
+
     public AbstractExpr() {
     }
 
