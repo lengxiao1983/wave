@@ -1,5 +1,7 @@
 package com.wave.slave;
 
+import com.wave.expr.value.WaveRow;
+
 import java.util.Map;
 
 /**
@@ -22,5 +24,5 @@ public abstract class AbstractOperator {
      * @param row
      * @return
      */
-    public abstract Object compute(Map<String, Double> row);
+    public abstract Object compute(WaveRow row);
 }

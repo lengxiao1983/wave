@@ -2,6 +2,7 @@ package com.wave.expr.imp;
 
 import com.wave.expr.AbstractExpr;
 import com.wave.expr.AbstractExprFactory;
+import com.wave.expr.value.WaveRow;
 
 import java.util.List;
 import java.util.Map;
@@ -21,7 +22,7 @@ public class OrExpr extends AbstractExpr {
         return op;
     }
 
-    public Object computer(Map<String, Double> row) {
+    public Object computer(WaveRow row) {
         List<AbstractExpr> params = getParams();
         if (params == null) {
             return false;
@@ -34,20 +35,19 @@ public class OrExpr extends AbstractExpr {
         return false;
     }
 
-    public Object tryCompute(Map<String, Double> curRow) {
+    public Object tryCompute(WaveRow curRow) {
 
         List<AbstractExpr> childs = getParams();
-        boolean hasExistUnknownColumn = true;
+        boolean hasExistUnknownColumn = false;
         for (AbstractExpr expr : childs) {
-            if ((expr instanceof ColumnExpr && expr.computer(curRow) == null)
-                    || UNKNOWN_RESULT.equals(expr.computer(curRow))) {
-                hasExistUnknownColumn = false;
+            if (UNKNOWN_RESULT.equals(expr.computer(curRow))) {
+                hasExistUnknownColumn = true;
             }
-            if ( Boolean.parseBoolean(String.valueOf(expr.computer(curRow)))) {
+            if (Boolean.parseBoolean(String.valueOf(expr.computer(curRow)))) {
                 return true;
             }
         }
-        if (!hasExistUnknownColumn) {
+        if (hasExistUnknownColumn) {
             return UNKNOWN_RESULT;
         }
         return false;

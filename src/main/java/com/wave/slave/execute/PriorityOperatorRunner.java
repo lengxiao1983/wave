@@ -1,6 +1,7 @@
 package com.wave.slave.execute;
 
 import com.wave.common.exception.WaveException;
+import com.wave.expr.value.WaveRow;
 import com.wave.slave.AbstractOperator;
 import com.wave.slave.operator.InputOperator;
 
@@ -25,7 +26,7 @@ public class PriorityOperatorRunner implements Comparable<PriorityOperatorRunner
             throw new WaveException();
         }
         InputOperator inputOperator = (InputOperator) operator;
-        Map<String, Double> row = inputOperator.dataSource();
+        WaveRow row = inputOperator.dataSource();
         if (inputOperator.getOperator() != null) {
             return runInner(inputOperator.getOperator(), row);
         } else {
@@ -37,12 +38,12 @@ public class PriorityOperatorRunner implements Comparable<PriorityOperatorRunner
         return 1;
     }
 
-    private Object runInner(AbstractOperator operator, Map<String, Double> row) {
+    private Object runInner(AbstractOperator operator, WaveRow row) {
         Object obj = operator.compute(row);
         if (operator.getOperator() == null) {
             return obj;
         } else {
-            return runInner(operator.getOperator(), (Map<String, Double>) obj);
+            return runInner(operator.getOperator(), (WaveRow) obj);
         }
     }
 }

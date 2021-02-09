@@ -3,6 +3,7 @@ package com.wave.expr.imp;
 import com.wave.expr.AbstractExpr;
 import com.wave.expr.AbstractExprFactory;
 import com.wave.expr.ExprFactory;
+import com.wave.expr.value.WaveRow;
 
 import java.util.Map;
 
@@ -36,13 +37,13 @@ public class ColumnExpr extends AbstractExpr {
     }
 
     @Override
-    public Object computer(Map<String, Double> row) {
+    public Object computer(WaveRow row) {
         return row.get(columnName);
     }
 
     @Override
-    public Object tryCompute(Map<String, Double> curRow) {
-        return null;
+    public Object tryCompute(WaveRow curRow) {
+        return curRow.get(columnName) == null ? UNKNOWN_RESULT : curRow.get(columnName);
     }
     @Override
     public AbstractExprFactory<ColumnExpr> getFactory() {

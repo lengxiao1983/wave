@@ -1,5 +1,7 @@
 package com.wave.expr;
 
+import com.wave.expr.value.WaveRow;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,9 +22,9 @@ public abstract class AbstractExpr implements Serializable {
 
     public abstract String op();
 
-    public abstract Object computer(Map<String, Double> row);
+    public abstract Object computer(WaveRow row);
 
-    public abstract Object tryCompute(Map<String, Double> curRow);
+    public abstract Object tryCompute(WaveRow curRow);
 
     public List<AbstractExpr> getParams() {
         return params;

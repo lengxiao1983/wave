@@ -2,6 +2,7 @@ package com.wave.expr.imp;
 
 import com.wave.expr.AbstractExpr;
 import com.wave.expr.AbstractExprFactory;
+import com.wave.expr.value.WaveRow;
 
 import java.util.List;
 import java.util.Map;
@@ -19,7 +20,7 @@ public class SubtractionExpr extends AbstractExpr {
         return op;
     }
 
-    public Object computer(Map<String, Double> row) {
+    public Object computer(WaveRow row) {
         List<AbstractExpr> params = getParams();
         if (params == null) {
             return 0.0;
@@ -31,7 +32,7 @@ public class SubtractionExpr extends AbstractExpr {
         return ret;
     }
 
-    public Object tryCompute(Map<String, Double> curRow) {
+    public Object tryCompute(WaveRow curRow) {
         return null;
     }
 

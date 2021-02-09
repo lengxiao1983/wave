@@ -3,6 +3,7 @@ package com.wave.expr.imp;
 import com.wave.expr.AbstractExpr;
 import com.wave.expr.AbstractExprFactory;
 import com.wave.expr.ExprFactory;
+import com.wave.expr.value.WaveRow;
 
 import java.util.List;
 import java.util.Map;
@@ -36,11 +37,11 @@ public class ConstantExpr extends AbstractExpr {
         return "CONSTANT";
     }
 
-    public Object computer(Map<String, Double> row) {
+    public Object computer(WaveRow row) {
         return value;
     }
 
-    public Object tryCompute(Map<String, Double> curRow) {
+    public Object tryCompute(WaveRow curRow) {
         return null;
     }
     @Override

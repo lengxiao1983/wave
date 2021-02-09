@@ -2,6 +2,7 @@ package com.wave.expr.imp;
 
 import com.wave.expr.AbstractExpr;
 import com.wave.expr.AbstractExprFactory;
+import com.wave.expr.value.WaveRow;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public class AndExpr extends AbstractExpr {
     }
 
     @Override
-    public Object computer(Map<String, Double> row) {
+    public Object computer(WaveRow row) {
         List<AbstractExpr> params = getParams();
         if (params == null) {
             return false;
@@ -39,12 +40,11 @@ public class AndExpr extends AbstractExpr {
     }
 
     @Override
-    public Object tryCompute(Map<String, Double> curRow) {
+    public Object tryCompute(WaveRow curRow) {
         List<AbstractExpr> childs = getParams();
         boolean hasExistUnknownColumn = false;
         for (AbstractExpr expr : childs) {
-            if ((expr instanceof ColumnExpr && expr.computer(curRow) == null)
-                    || UNKNOWN_RESULT.equals(expr.computer(curRow))) {
+            if (UNKNOWN_RESULT.equals(expr.computer(curRow))) {
                 hasExistUnknownColumn = true;
             }
             if (! Boolean.parseBoolean(String.valueOf(expr.computer(curRow)))) {
