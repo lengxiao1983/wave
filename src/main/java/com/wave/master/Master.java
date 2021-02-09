@@ -85,6 +85,7 @@ public class Master extends ClusterNode {
         }
         for (Address address : addresses) {
             Slave slave = new Slave();
+            slave.setAddress(address);
             slaves.put(slave.getAddress(), slave);
         }
         return this;

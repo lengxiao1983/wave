@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<httpServer context="/wave">
+    <handler>
+        <handler-class>com.wave.network.http.impl.JobHandler</handler-class>
+        <url-pattern>/job</url-pattern>
+    </handler>
+
+
+</httpServer>

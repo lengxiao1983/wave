@@ -1,6 +1,7 @@
 package com.wave.network;
 
 import com.wave.network.request.RequestType;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -11,6 +12,7 @@ import java.net.Socket;
  * @author shkstart
  * @create 2021-01-30 16:10
  */
+@Slf4j
 public class RpcServer {
     private final static RpcServer instance = new RpcServer();
     private  Thread thread ;
@@ -27,7 +29,7 @@ public class RpcServer {
             return;
         }
         hasStart = true;
-        System.out.println("server listening");
+        log.info("server listening port:" + port);
         Runnable runnable = new Runnable() {
             public void run() {
                 try {

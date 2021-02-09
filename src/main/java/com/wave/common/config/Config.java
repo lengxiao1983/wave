@@ -25,7 +25,6 @@ public class Config {
     }
 
     public void init() throws Exception {
-        Properties properties = new Properties();
         InputStream in = Config.class.getClassLoader().getResourceAsStream("config.properties");
         properties.load(in);
         log.info("start load config...");
@@ -45,6 +44,10 @@ public class Config {
         address.setIp(arr[0].trim());
         address.setPort(Integer.valueOf(arr[1]));
         return address;
+    }
+
+    public Integer getHttpListenPort() {
+        return getInteger(Constant.CONFIG_KEY_HTTP_LISTEN_PORT, 8080);
     }
 
     public List<Address> getSlaveAddresses() {

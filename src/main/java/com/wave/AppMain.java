@@ -11,6 +11,7 @@ import com.wave.network.AbstractMessage;
 import com.wave.network.Address;
 import com.wave.network.RpcClient;
 import com.wave.network.RpcServer;
+import com.wave.network.http.WaveHttpServer;
 import com.wave.network.request.TaskSubmitRequest;
 import com.wave.slave.Slave;
 import lombok.Data;
@@ -32,7 +33,10 @@ public class AppMain {
         // 初始化配置文件
         Config.get().init();
 
-        // 读取监听端口
+        // 启动http服务
+        WaveHttpServer.start(Config.get().getHttpListenPort());
+
+        // 读取rpc监听端口
         Integer listenPort = Config.get().getListenPort();
 
         // 启动服务
