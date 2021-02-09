@@ -10,19 +10,16 @@ import java.io.Serializable;
  */
 @Data
 public class Address implements Serializable {
-    private String id;
     private String ip;
     private int port;
 
     public Address ip(String ip) {
         this.ip = ip;
-        this.id = ip+":"+port;
         return this;
     }
 
     public Address port(int port) {
         this.port = port;
-        this.id = ip+":"+port;
         return this;
     }
 

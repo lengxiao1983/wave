@@ -46,9 +46,11 @@ public class AppMain {
             switch (type) {
                 case MASTER:
                     Master.get().addSlaveAddress(Config.get().getSlaveAddresses()).start();
+                    log.info("master start success");
                     break;
                 case SLAVE:
                     Slave.get().masterAddress(Config.get().getMasterAddress()).start();
+                    log.info("slave start success");
                     break;
                 default:
                     throw new RuntimeException();
