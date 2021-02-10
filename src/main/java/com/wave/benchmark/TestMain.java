@@ -39,7 +39,7 @@ public class TestMain {
     }
 
     public static void main(String[] args) {
-        String exprString = "a>=99 and b<2 and c<3";
+        String exprString = "a>99 and b<2 and c<3";
         Integer runTimes = 10;
         ComputeNode computeNode = createComputeNode(exprString);
         BaseTestRunner baseTestRunner = new BaseTestRunner();
