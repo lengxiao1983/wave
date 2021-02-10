@@ -10,7 +10,8 @@ import lombok.Data;
  */
 @Data
 public abstract class ComputeNode {
-    private Pair<AbstractExpr, ComputeNode> nextNode;
+    private AbstractExpr expr;
+    private ComputeNode nextNode;
 
     /**
      * 获取字段

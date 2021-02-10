@@ -25,12 +25,12 @@ public class TestMain {
         Integer runTimes = 10;
         ComputeNode computeNode = createComputeNode(exprString);
         BaseTestRunner baseTestRunner = new BaseTestRunner();
-        baseTestRunner.setNodeLink(computeNode);
+        baseTestRunner.setRootNode(computeNode);
         baseTestRunner.setRunTimes(runTimes);
         baseTestRunner.run();
 
         OptimizeTestRunner optimizeTestRunner = new OptimizeTestRunner();
-        optimizeTestRunner.setNodeLink(computeNode);
+        optimizeTestRunner.setRootNode(computeNode);
         optimizeTestRunner.setRunTimes(runTimes);
         optimizeTestRunner.run();
     }

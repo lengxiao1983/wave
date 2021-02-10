@@ -18,15 +18,30 @@ public abstract class AbstractRunner implements Runnable {
     /**
      * 执行计划
      */
-    private ComputeNode nodeLink;
+    private ComputeNode rootNode;
+
+    private long cost = System.currentTimeMillis();
+
+    public void start() {
+        new Thread(this).start();
+    }
 
 
     /**
-     * 内容逻辑
+     * 内部逻辑
+     * @return
      */
-    public abstract void runInner();
+    public abstract boolean runInner();
 
     public void run() {
-
+        try {
+            cost = System.currentTimeMillis();
+            for (int i = 0; i < runTimes; i++) {
+                runInner();
+            }
+            cost = System.currentTimeMillis() - cost;
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
     }
 }
