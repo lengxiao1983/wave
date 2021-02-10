@@ -1,5 +1,7 @@
 package com.wave.benchmark;
 
+import com.wave.benchmark.impl.ColumnNode;
+import com.wave.benchmark.impl.InputNode;
 import com.wave.expr.AbstractExpr;
 import com.wave.expr.parse.ExprParseUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +19,21 @@ public class TestMain {
      */
     public static ComputeNode createComputeNode(String exprString) {
         AbstractExpr expr = ExprParseUtils.parse(exprString);
+        InputNode inputNode = new InputNode();
+        inputNode.setColumnName("a");
+        ColumnNode bCol = new ColumnNode();
+        bCol.setColumnName("b");
+        bCol.setCost(5L);
+        inputNode.setExpr(expr);
+        inputNode.setNextNode(bCol);
+
+        ColumnNode cCol = new ColumnNode();
+        cCol.setColumnName("c");
+        cCol.setCost(6L);
+
+        bCol.setExpr(expr);
+        bCol.setNextNode(cCol);
+
         return null;
     }
 
