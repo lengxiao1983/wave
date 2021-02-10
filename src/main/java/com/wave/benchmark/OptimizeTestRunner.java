@@ -9,7 +9,10 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Data
-public class OptimizeTestRunner {
-    private String exprString;
-    private AbstractExpr expr;
+public class OptimizeTestRunner extends AbstractRunner{
+
+    @Override
+    public void runInner() {
+
+    }
 }
