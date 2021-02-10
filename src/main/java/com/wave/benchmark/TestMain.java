@@ -50,20 +50,19 @@ public class TestMain {
 
     public static void main(String[] args) {
         String exprString = "a>0 and b<200 and c<300";
-        Integer runTimes = 1000;
-        ComputeNode computeNode = createComputeNode(exprString);
+        Integer runTimes = 100;
+        ComputeNode baseTestNode = createComputeNode(exprString);
         BaseTestRunner baseTestRunner = new BaseTestRunner();
-        baseTestRunner.setRootNode(computeNode);
-        baseTestRunner.setLeafNode(findLeafNode(computeNode));
+        baseTestRunner.setRootNode(baseTestNode);
+        baseTestRunner.setLeafNode(findLeafNode(baseTestNode));
         baseTestRunner.setRunTimes(runTimes);
-        baseTestRunner.run();
         baseTestRunner.setName("baseTestRunner");
 
+        ComputeNode optimizeTestNode = createComputeNode(exprString);
         OptimizeTestRunner optimizeTestRunner = new OptimizeTestRunner();
-        optimizeTestRunner.setRootNode(computeNode);
-        optimizeTestRunner.setLeafNode(findLeafNode(computeNode));
+        optimizeTestRunner.setRootNode(optimizeTestNode);
+        optimizeTestRunner.setLeafNode(findLeafNode(optimizeTestNode));
         optimizeTestRunner.setRunTimes(runTimes);
-        optimizeTestRunner.run();
         optimizeTestRunner.setName("optimizeTestRunner");
 
         baseTestRunner.start();
