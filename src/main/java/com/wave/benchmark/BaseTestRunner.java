@@ -16,16 +16,16 @@ public class BaseTestRunner extends AbstractRunner{
         ComputeNode rootNode = getRootNode();
         WaveRow row = rootNode.fetch(null);
         if (rootNode.getNextNode() != null) {
-            fetchInner(rootNode.getNextNode(), row);
+            fetchNext(rootNode.getNextNode(), row);
         }
         boolean result = Boolean.parseBoolean(String.valueOf(rootNode.getExpr().computer(row)));
         return result;
     }
 
-    private void fetchInner(ComputeNode node, WaveRow row) {
+    private void fetchNext(ComputeNode node, WaveRow row) {
         WaveRow resultRow = node.fetch(row);
         if (node.getNextNode() != null) {
-            fetchInner(node.getNextNode(), resultRow);
+            fetchNext(node.getNextNode(), resultRow);
         }
     }
 }

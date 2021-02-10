@@ -30,6 +30,7 @@ public class TestMain {
         ColumnNode cCol = new ColumnNode();
         cCol.setColumnName("c");
         cCol.setCost(6L);
+        cCol.setExpr(expr);
 
         bCol.setExpr(expr);
         bCol.setNextNode(cCol);
@@ -38,17 +39,23 @@ public class TestMain {
     }
 
     public static void main(String[] args) {
-        String exprString = "a>1 and b<2";
+        String exprString = "a>=99 and b<2 and c<3";
         Integer runTimes = 10;
         ComputeNode computeNode = createComputeNode(exprString);
         BaseTestRunner baseTestRunner = new BaseTestRunner();
         baseTestRunner.setRootNode(computeNode);
         baseTestRunner.setRunTimes(runTimes);
         baseTestRunner.run();
+        baseTestRunner.setName("baseTestRunner");
 
         OptimizeTestRunner optimizeTestRunner = new OptimizeTestRunner();
         optimizeTestRunner.setRootNode(computeNode);
         optimizeTestRunner.setRunTimes(runTimes);
         optimizeTestRunner.run();
+        optimizeTestRunner.setName("optimizeTestRunner");
+
+        baseTestRunner.start();
+        optimizeTestRunner.start();
+
     }
 }

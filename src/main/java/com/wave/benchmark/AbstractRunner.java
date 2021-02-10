@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Data
 public abstract class AbstractRunner implements Runnable {
+    private String name;
+
     /**
      * 运行次数
      */
@@ -20,7 +22,7 @@ public abstract class AbstractRunner implements Runnable {
      */
     private ComputeNode rootNode;
 
-    private long cost = System.currentTimeMillis();
+    private long cost = 0;
 
     public void start() {
         new Thread(this).start();
@@ -40,6 +42,7 @@ public abstract class AbstractRunner implements Runnable {
                 runInner();
             }
             cost = System.currentTimeMillis() - cost;
+            log.warn("benchMark {} runTimes:{} cost:{}ms", name, runTimes, cost);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
