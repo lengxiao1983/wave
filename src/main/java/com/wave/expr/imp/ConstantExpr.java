@@ -42,7 +42,7 @@ public class ConstantExpr extends AbstractExpr {
     }
 
     public Object tryCompute(WaveRow curRow) {
-        return null;
+        return value == null ? UNKNOWN_RESULT : value;
     }
     @Override
     public AbstractExprFactory<ConstantExpr> getFactory() {

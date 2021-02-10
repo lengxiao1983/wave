@@ -18,7 +18,8 @@ public class BaseTestRunner extends AbstractRunner{
         if (rootNode.getNextNode() != null) {
             fetchNext(rootNode.getNextNode(), row);
         }
-        boolean result = Boolean.parseBoolean(String.valueOf(rootNode.getExpr().computer(row)));
+
+        boolean result = Boolean.parseBoolean(String.valueOf(getLeafNode().getExpr().computer(row)));
         return result;
     }
 

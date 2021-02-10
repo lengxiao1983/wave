@@ -35,21 +35,33 @@ public class TestMain {
         bCol.setExpr(expr);
         bCol.setNextNode(cCol);
 
-        return null;
+        return inputNode;
+    }
+
+    public static ComputeNode findLeafNode(ComputeNode node) {
+        ComputeNode curNode = node;
+        ComputeNode nextNode = node.getNextNode();
+        while (nextNode != null) {
+            curNode = nextNode;
+            nextNode = nextNode.getNextNode();
+        }
+        return curNode;
     }
 
     public static void main(String[] args) {
-        String exprString = "a>99 and b<2 and c<3";
-        Integer runTimes = 10;
+        String exprString = "a>0 and b<200 and c<300";
+        Integer runTimes = 1000;
         ComputeNode computeNode = createComputeNode(exprString);
         BaseTestRunner baseTestRunner = new BaseTestRunner();
         baseTestRunner.setRootNode(computeNode);
+        baseTestRunner.setLeafNode(findLeafNode(computeNode));
         baseTestRunner.setRunTimes(runTimes);
         baseTestRunner.run();
         baseTestRunner.setName("baseTestRunner");
 
         OptimizeTestRunner optimizeTestRunner = new OptimizeTestRunner();
         optimizeTestRunner.setRootNode(computeNode);
+        optimizeTestRunner.setLeafNode(findLeafNode(computeNode));
         optimizeTestRunner.setRunTimes(runTimes);
         optimizeTestRunner.run();
         optimizeTestRunner.setName("optimizeTestRunner");

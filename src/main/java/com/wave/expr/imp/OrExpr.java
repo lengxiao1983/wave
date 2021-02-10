@@ -40,10 +40,10 @@ public class OrExpr extends AbstractExpr {
         List<AbstractExpr> childs = getParams();
         boolean hasExistUnknownColumn = false;
         for (AbstractExpr expr : childs) {
-            if (UNKNOWN_RESULT.equals(expr.computer(curRow))) {
+            if (UNKNOWN_RESULT.equals(expr.tryCompute(curRow))) {
                 hasExistUnknownColumn = true;
             }
-            if (Boolean.parseBoolean(String.valueOf(expr.computer(curRow)))) {
+            if (Boolean.parseBoolean(String.valueOf(expr.tryCompute(curRow)))) {
                 return true;
             }
         }

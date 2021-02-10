@@ -35,7 +35,7 @@ public class MultiplicationExpr extends AbstractExpr {
     public Object tryCompute(WaveRow curRow) {
         List<AbstractExpr> params = getParams();
         for (AbstractExpr expr : params) {
-            if (UNKNOWN_RESULT.equals(expr.computer(curRow))) {
+            if (UNKNOWN_RESULT.equals(expr.tryCompute(curRow))) {
                 return UNKNOWN_RESULT;
             }
         }

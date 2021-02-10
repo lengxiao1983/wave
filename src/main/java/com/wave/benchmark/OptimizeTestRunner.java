@@ -19,13 +19,16 @@ public class OptimizeTestRunner extends AbstractRunner{
         ComputeNode rootNode = getRootNode();
         WaveRow row = rootNode.fetch(null);
         if (rootNode.getNextNode() != null) {
-            if (Boolean.parseBoolean(String.valueOf(rootNode.getExpr().tryCompute(row)))
-                    || rootNode.getExpr().tryCompute(row).equals(UNKNOWN_RESULT)) {
+            Object tryResult = rootNode.getExpr().tryCompute(row);
+            Boolean result = Boolean.parseBoolean(String.valueOf(tryResult));
+            if (tryResult.equals(UNKNOWN_RESULT)) {
                 fetchInner(rootNode.getNextNode(), row);
+            } else {
+                return result;
             }
         }
 
-        return Boolean.parseBoolean(String.valueOf(rootNode.getExpr().computer(row)));
+        return Boolean.parseBoolean(String.valueOf(getLeafNode().getExpr().computer(row)));
     }
 
     private void fetchInner(ComputeNode node, WaveRow row) {
