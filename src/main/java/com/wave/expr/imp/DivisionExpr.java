@@ -33,7 +33,13 @@ public class DivisionExpr extends AbstractExpr {
     }
 
     public Object tryCompute(WaveRow curRow) {
-        return null;
+        List<AbstractExpr> params = getParams();
+        for (AbstractExpr expr : params) {
+            if (UNKNOWN_RESULT.equals(expr.computer(curRow))) {
+                return UNKNOWN_RESULT;
+            }
+        }
+        return computer(curRow);
     }
     @Override
     public AbstractExprFactory<DivisionExpr> getFactory() {
